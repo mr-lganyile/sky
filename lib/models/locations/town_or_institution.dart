@@ -1,0 +1,15 @@
+enum TownOrInstitution {
+  umlazi,
+  mut,
+  dut,
+  howardUKZN,
+  mayville,
+  sydenham,
+  durbanCentral,
+  nanda,
+  hammarsdale,
+  westvilleUKZN,
+  edgewoodUKZN,
+  nelsonMandelUKZN,
+  pmbUKZN,
+}

@@ -1,0 +1,225 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /{document=**} {
+      // get - used if a client with want to read this document.
+      // list - used if there is going to be a query returning this document.
+      // To make this rule cascade I'll have to use restOfPath=** wildcard otherwise it won't.
+      allow read, write: if false;
+    }
+
+    function isAreaContainedWithin(){
+      return request.resource.data.groupArea.areaName in [
+        // 1. Umlazi
+        'A Section-Umlazi-Durban-Kwa Zulu Natal-South Africa',
+        'AA Section-Umlazi-Durban-Kwa Zulu Natal-South Africa',
+        'B Section-Umlazi-Durban-Kwa Zulu Natal-South Africa',
+        'BB Section-Umlazi-Durban-Kwa Zulu Natal-South Africa',
+        'C Section-Umlazi-Durban-Kwa Zulu Natal-South Africa',
+        'CC Section-Umlazi-Durban-Kwa Zulu Natal-South Africa',
+        'D Section-Umlazi-Durban-Kwa Zulu Natal-South Africa',
+        'E Section-Umlazi-Durban-Kwa Zulu Natal-South Africa',
+        'F Section-Umlazi-Durban-Kwa Zulu Natal-South Africa',
+        'G Section-Umlazi-Durban-Kwa Zulu Natal-South Africa',
+        'H Section-Umlazi-Durban-Kwa Zulu Natal-South Africa',
+        'J Section-Umlazi-Durban-Kwa Zulu Natal-South Africa',
+        'K Section-Umlazi-Durban-Kwa Zulu Natal-South Africa',
+        'J Section-Umlazi-Durban-Kwa Zulu Natal-South Africa',
+        'L Section-Umlazi-Durban-Kwa Zulu Natal-South Africa',
+        'M Section-Umlazi-Durban-Kwa Zulu Natal-South Africa',
+        'N Section-Umlazi-Durban-Kwa Zulu Natal-South Africa',
+        'P Section-Umlazi-Durban-Kwa Zulu Natal-South Africa',
+        'Q Section-Umlazi-Durban-Kwa Zulu Natal-South Africa',
+        'R Section-Umlazi-Durban-Kwa Zulu Natal-South Africa',
+        'S Section-Umlazi-Durban-Kwa Zulu Natal-South Africa',
+        'U Section-Umlazi-Durban-Kwa Zulu Natal-South Africa',
+        'V Section-Umlazi-Durban-Kwa Zulu Natal-South Africa',
+        'W Section-Umlazi-Durban-Kwa Zulu Natal-South Africa',
+        'Y Section-Umlazi-Durban-Kwa Zulu Natal-South Africa',
+        'Z Section-Umlazi-Durban-Kwa Zulu Natal-South Africa',
+        'Malukazi-Umlazi-Durban-Kwa Zulu Natal-South Africa',
+        'Philani-Umlazi-Durban-Kwa Zulu Natal-South Africa',
+
+        // 2. Mangosuthu
+        'Mangosuthu (MUT)-Durban-Kwa Zulu Natal-South Africa',
+
+        // 3. DUT
+        'DUT-Durban-Kwa Zulu Natal-South Africa',
+
+        // 4. UKZN Howard
+        'Howard College (UKZN)-Durban-Kwa Zulu Natal-South Africa',
+
+        // 5. Mayville
+        'Cato Crest-Mayville-Durban-Kwa Zulu Natal-South Africa',
+        'Cato Manor-Mayville-Durban-Kwa Zulu Natal-South Africa',
+        'Richview-Mayville-Durban-Kwa Zulu Natal-South Africa',
+        'Masxha-Mayville-Durban-Kwa Zulu Natal-South Africa',
+        'Bonela-Mayville-Durban-Kwa Zulu Natal-South Africa',
+        'Nsimbini-Mayville-Durban-Kwa Zulu Natal-South Africa',
+        'Galway-Mayville-Durban-Kwa Zulu Natal-South Africa',
+
+        // 6. Sydenham
+        'Foreman-Sydenham-Durban-Kwa Zulu Natal-South Africa',
+        'Burnwood-Sydenham-Durban-Kwa Zulu Natal-South Africa',
+        'Kennedy-Sydenham-Durban-Kwa Zulu Natal-South Africa',
+        'Palmet-Sydenham-Durban-Kwa Zulu Natal-South Africa',
+        'Sydenham Height-Sydenham-Durban-Kwa Zulu Natal-South Africa',
+        '3 Rand-Sydenham-Durban-Kwa Zulu Natal-South Africa',
+
+        // 7. Durban Central
+        'Glenwood-Durban Central-Durban-Kwa Zulu Natal-South Africa',
+        'Berea-Durban Central-Durban-Kwa Zulu Natal-South Africa',
+        'South Beach-Durban Central-Durban-Kwa Zulu Natal-South Africa',
+        'Masgrave-Durban Central-Durban-Kwa Zulu Natal-South Africa',
+
+        // 8. Nanda
+        'Bhambayi-Nanda-Durban-Kwa Zulu Natal-South Africa',
+        'Ezimangweni-Nanda-Durban-Kwa Zulu Natal-South Africa',
+        'Dikwe-Nanda-Durban-Kwa Zulu Natal-South Africa',
+        'Mshayazafe-Nanda-Durban-Kwa Zulu Natal-South Africa',
+        'Jackport-Nanda-Durban-Kwa Zulu Natal-South Africa',
+        'Ohlange-Nanda-Durban-Kwa Zulu Natal-South Africa',
+        'Africa-Nanda-Durban-Kwa Zulu Natal-South Africa',
+        'Congo-Nanda-Durban-Kwa Zulu Natal-South Africa',
+        'Maoti-Nanda-Durban-Kwa Zulu Natal-South Africa',
+        'Newtown A-Nanda-Durban-Kwa Zulu Natal-South Africa',
+        'Newtown B-Nanda-Durban-Kwa Zulu Natal-South Africa',
+        'Ka G-Nanda-Durban-Kwa Zulu Natal-South Africa',
+        'Matendeni-Nanda-Durban-Kwa Zulu Natal-South Africa',
+        'Mtshebheni-Nanda-Durban-Kwa Zulu Natal-South Africa',
+        'Zinkawini-Nanda-Durban-Kwa Zulu Natal-South Africa',
+        'Tafuleni-Nanda-Durban-Kwa Zulu Natal-South Africa',
+        'Ngoqokazi-Nanda-Durban-Kwa Zulu Natal-South Africa',
+        'Matikwe-Nanda-Durban-Kwa Zulu Natal-South Africa',
+        'Stop 8-Nanda-Durban-Kwa Zulu Natal-South Africa',
+        'Mafuya-Nanda-Durban-Kwa Zulu Natal-South Africa',
+        'Nhlungwane-Nanda-Durban-Kwa Zulu Natal-South Africa',
+        'Newtown C-Nanda-Durban-Kwa Zulu Natal-South Africa',
+        'Machobeni-Nanda-Durban-Kwa Zulu Natal-South Africa',
+        'Mzomusha-Nanda-Durban-Kwa Zulu Natal-South Africa',
+        'White City-Nanda-Durban-Kwa Zulu Natal-South Africa',
+
+        // 9. Hammarsdale
+        'Unit 1 North-Hammarsdale-Durban-Kwa Zulu Natal-South Africa',
+        'Unit 1 South-Hammarsdale-Durban-Kwa Zulu Natal-South Africa',
+        'Unit 2 North-Hammarsdale-Durban-Kwa Zulu Natal-South Africa',
+        'Unit 2 South-Hammarsdale-Durban-Kwa Zulu Natal-South Africa',
+        'Unit 3-Hammarsdale-Durban-Kwa Zulu Natal-South Africa',
+        'Unit 4-Hammarsdale-Durban-Kwa Zulu Natal-South Africa',
+        'Unit 5-Hammarsdale-Durban-Kwa Zulu Natal-South Africa',
+        'Unit 6-Hammarsdale-Durban-Kwa Zulu Natal-South Africa',
+        'Unit 7-Hammarsdale-Durban-Kwa Zulu Natal-South Africa',
+        'Mlaba Village-Hammarsdale-Durban-Kwa Zulu Natal-South Africa',
+        'Georgedale-Hammarsdale-Durban-Kwa Zulu Natal-South Africa',
+        'Amalanga-Hammarsdale-Durban-Kwa Zulu Natal-South Africa',
+        'Woodglen-Hammarsdale-Durban-Kwa Zulu Natal-South Africa',
+        'Sankontshe-Hammarsdale-Durban-Kwa Zulu Natal-South Africa',
+        'Mophela-Hammarsdale-Durban-Kwa Zulu Natal-South Africa',
+        'Station-Hammarsdale-Durban-Kwa Zulu Natal-South Africa',
+        'Webber-Hammarsdale-Durban-Kwa Zulu Natal-South Africa'
+
+      ];
+    }
+
+    // Branch : supported_locations_resources_crud -> supported_locaitons_resources_crud_firestore_security_rules
+    match /supported_countries/{countryId}{
+      allow write: if false;
+      allow read;
+    }
+
+    // Branch : supported_locations_resources_crud -> supported_locaitons_resources_crud_firestore_security_rules
+    match /supported_provinces_or_states/{provinceOrStateId}{
+      allow write: if false;
+      allow read;
+    }
+
+    // Branch : supported_locations_resources_crud -> supported_locaitons_resources_crud_firestore_security_rules
+    match /supported_cities/{cityId}{
+      allow write: if false;
+      allow read;
+    }
+
+    // Branch : supported_locations_resources_crud -> supported_locaitons_resources_crud_firestore_security_rules
+    match /supported_towns_or_institutions/{townsOrInstitutionsId}{
+      allow write: if false;
+      allow read;
+    }
+
+    // Branch : supported_locations_resources_crud -> supported_locaitons_resources_crud_firestore_security_rules
+    match /supported_areas/{areaId}{
+      allow write: if false;
+      allow read;
+    }
+
+    match /users/{userId}{
+      allow create: if request.auth != null &&
+
+      // Phone number is provided.
+      request.resource.data.phoneNumber != null &&
+      request.resource.data.phoneNumber != '' &&
+
+      request.resource.data.profileImageURL != null &&
+      request.resource.data.profileImageURL != '' &&
+
+      // We need to compare a property(phoneNumber) of alcoholic docs instead of a uid.
+      exists(/databases/$(database)/documents/users/
+      $(userId))==false;
+
+      allow read;
+
+      // "update" is made this way because it conflicts with "create".
+      allow update, delete: if false;
+    }
+
+    match /alcohol_posts/{postId}{
+      
+      allow create: if request.auth != null &&
+      request.resource.data.forTownOrInstitutionNo == 
+      request.resource.data.postCreator.area.townOrInstitutionFK;
+
+      allow read;
+
+      allow update: if false;
+
+      allow delete: if request.auth != null && 
+      resource.data.postCreator.phoneNumber == request.auth.uid;
+
+      match /comments/{commentId}{
+        
+        allow create: if request.auth != null &&
+        request.resource.data.forTownOrInstitutionNo == 
+        get(/databases/$(database)/documents/alcohol_posts/$(postId)).data.forTownOrInstitutionNo;
+
+        allow read;
+
+        allow update, delete: if false;
+      }
+    }
+
+    match /clothing_posts/{postId}{
+      
+      allow create: if request.auth != null &&
+      request.resource.data.forTownOrInstitutionNo == 
+      request.resource.data.postCreator.area.townOrInstitutionFK;
+
+      allow read;
+
+      allow update: if false;
+
+      allow delete: if request.auth != null && 
+      resource.data.postCreator.phoneNumber == request.auth.uid;
+
+      match /comments/{commentId}{
+        
+        allow create: if request.auth != null &&
+        request.resource.data.forTownOrInstitutionNo == 
+        get(/databases/$(database)/documents/clothing_posts/$(postId)).data.forTownOrInstitutionNo;
+
+        allow read;
+
+        allow update, delete: if false;
+      }
+    }
+  }
+}  

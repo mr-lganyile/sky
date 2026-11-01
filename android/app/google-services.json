@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "916186798007",
+    "project_id": "sky-4all",
+    "storage_bucket": "sky-4all.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:916186798007:android:06bf8b8ec6770c0a113a32",
+        "android_client_info": {
+          "package_name": "com.skyandstars4all.sky"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCP4Wr4gjeqfzFlQEDtRWM3q5Jyzszp7nI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

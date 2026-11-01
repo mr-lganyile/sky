@@ -1,0 +1,83 @@
+rules_version = '2';
+
+// Craft rules based on data in your Firestore database
+// allow write: if firestore.get(
+//    /databases/(default)/documents/users/$(request.auth.uid)).data.isAdmin;
+service firebase.storage {
+  match /b/{bucket}/o {
+    match /{allPaths=**} {
+      allow read, write: if false;
+    }
+
+    // Branch : group_resources_crud ->  group_resources_crud_storage_security
+    // Images can either be .png or .jpg in order for them to be acceptable.
+    function isValidContentType(data) {
+      return data.contentType in ['image/png', 'image/jpeg', 'image/jpg', 'video/mp4'];
+    }
+
+    // Branch : group_resources_crud ->  group_resources_crud_storage_security
+    function isValidFileExtension(fileName) {
+      return fileName.matches('(?i:.*[.]png)');
+    }
+
+    // Branch : store_resources_crud ->  store_resources_crud_storage_security
+    // Videos/Images must be less than 100MB
+    function isValidFileSize(data) {
+      return data.size <= 100 * 1024 * 1024;
+    }
+
+    match /{host}/clothing_posts/{image}{
+      allow create: if request.auth != null && isValidContentType(request.resource) && isValidFileSize(request.resource);
+      allow update, delete: if false;
+      allow read;
+    }
+
+    match /{host}/alcohol_posts/where_were_you/{path=**}{
+      allow create: if request.auth != null && isValidContentType(request.resource) && isValidFileSize(request.resource);
+      allow update, delete: if false;
+      allow read;
+    }
+
+    match /{host}/alcohol_posts/who_were_you_with/{path=**}{
+      allow create: if request.auth != null && isValidContentType(request.resource) && isValidFileSize(request.resource);
+      allow update, delete: if false;
+      allow read;
+    }
+
+    match /{host}/alcohol_posts/what_happened/{path=**}{
+      allow create: if request.auth != null && isValidContentType(request.resource) && isValidFileSize(request.resource);
+      allow update, delete: if false;
+      allow read;
+    }
+
+    match /{host}/alcohol_posts/what_were_you_drinking/{path=**}{
+      allow create: if request.auth != null && isValidContentType(request.resource) && isValidFileSize(request.resource);
+      allow update, delete: if false;
+      allow read;
+    }
+
+    match /{host}/users/profile_images/{profileImage} {
+
+      allow create;//: if request.auth != null;// && 
+
+      // Make sure authenticated user's uid is the same as the document id of this image.
+      //request.auth.uid == profileImage &&
+
+      // Make sure there is no user already using the new user's phone number.
+      //firestore.exists(/databases/(default)/documents/alcoholics/
+      //$(request.auth.uid))==false &&
+      //firestore.exists(/databases/(default)/documents/store_owners/
+      //$(request.auth.uid))==false &&
+      
+      //isValidFileSize(request.resource) && 
+      //isValidContentType(request.resource); */
+
+      allow read; // Anybody can view  store owners images.
+
+      // No one can delete a store owner image.
+      allow update, delete: if false;
+      
+    }
+
+  }
+}
