@@ -18,6 +18,7 @@ import '../models/posts/post_comment.dart';
 import '../models/users/abstract_user.dart';
 import '../models/users/user.dart' as my;
 import '../screens/utils/globals.dart';
+import 'dart:developer' as debug;
 
 enum ClothingPostStatus {
   loginRequired,
@@ -53,9 +54,9 @@ class ClothingPostController extends GetxController {
   });
 
   // ======================Cloths Post [Start]======================
-  /*Rx<String> _clothsPostImageURL = Rx('');
-  String get clothsPostImageURL => _clothsPostImageURL.value; 
-
+  Rx<String> _clothsPostImageURL = Rx('');
+  String get clothsPostImageURL => _clothsPostImageURL.value;
+  /*
   Rx<File?> _clothsPostImage = Rx(null);
   File? get clothsPostImage => _clothsPostImage.value;*/
 
@@ -77,6 +78,11 @@ class ClothingPostController extends GetxController {
   Rx<IdentifeirSymbol?> _currentIdentifeirSymbol = Rx(null);
   IdentifeirSymbol? get currentIdentifeirSymbol =>
       _currentIdentifeirSymbol.value;
+
+  void setClothsPostImageURL(String clothsImageURL) {
+    _clothsPostImageURL = Rx(clothsImageURL);
+    update();
+  }
 
   Future<TrackableUpdateStatus> updateTrackableQuantify(
     String postId,
@@ -224,13 +230,15 @@ class ClothingPostController extends GetxController {
             '$host/clothing_posts/${_clothingPostReference.value!.id}',
           ),
         ).value;
-        clothing.setClothsPostImageURL(trimmedURL(clothsPostImageURL));
+        String URL = trimmedURL(clothsPostImageURL);
+        clothing.setClothsPostImageURL(URL);
+        setClothsPostImageURL(URL);
 
         // Get.snackbar('Image Status', 'Image File Successfully Captured.');
-        update();
       } else {
         Get.snackbar('Error', 'Image Wasn\'t Captured.');
       }
+      update();
     }
   }
 

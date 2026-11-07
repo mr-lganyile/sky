@@ -3,7 +3,6 @@ import 'dart:developer' as debug;
 import '/models/posts/identifeir_symbol.dart';
 
 class Clothing {
-  DateTime? wearingOn;
   String? clothsPostImageURL;
 
   Map<int, IdentifeirSymbol> identifierSymbols;
@@ -11,15 +10,7 @@ class Clothing {
 
   final int maximumNumberOfAllowedCloths = 3;
 
-  Clothing({
-    this.wearingOn,
-    required this.identifierSymbols,
-    this.clothsPostImageURL = '',
-  });
-
-  void setWearingOn() {
-    wearingOn = DateTime.now();
-  }
+  Clothing({required this.identifierSymbols, this.clothsPostImageURL = ''});
 
   void setClothsPostImageURL(String clothsPostImageURL) =>
       this.clothsPostImageURL = clothsPostImageURL;
@@ -52,14 +43,25 @@ class Clothing {
 
   // Careful the date does not result into the null pointer exception.
   Map<String, dynamic> toJson() => {
-    'day': wearingOn!.day,
-    'month': wearingOn!.month,
-    'year': wearingOn!.year,
-    'clothing': identifierSymbols,
+    'clothsPostImageURL': clothsPostImageURL,
+    'identifierSymbols': toStringKeys(),
   };
 
-  factory Clothing.fromJson(dynamic json) => Clothing(
-    wearingOn: DateTime(json['year'], json['month'], json['day']),
-    identifierSymbols: json['clothing'],
+  Map<String, dynamic> toStringKeys() {
+    return identifierSymbols.map(
+      (key, value) => MapEntry(key.toString(), value.toJson()),
+    );
+  }
+
+  static Map<int, IdentifeirSymbol> toIntKeys(Map<String, dynamic> json) {
+    return json.map(
+      (key, value) =>
+          MapEntry(int.parse(key), IdentifeirSymbol.fromJson(value)),
+    );
+  }
+
+  factory Clothing.fromJson(Map<String, dynamic> json) => Clothing(
+    clothsPostImageURL: json['clothsPostImageURL'],
+    identifierSymbols: toIntKeys(json['identifierSymbols']),
   );
 }

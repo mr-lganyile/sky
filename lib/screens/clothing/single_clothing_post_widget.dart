@@ -286,7 +286,7 @@ class SingleClothingPostState extends State<SingleClothingPostWidget> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         heading(),
-
+        SizedBox(height: 10),
         displayImage(),
         Padding(
           padding: const EdgeInsets.all(10),

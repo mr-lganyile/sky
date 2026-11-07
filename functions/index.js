@@ -39,9 +39,9 @@ const fakePosts = new FakePosts();
 // http://127.0.0.1:5001/sky-and-stars/africa-south1/saveFakePosts
 
 
-// https://createsupportedlocations-tjb3vctcsa-bq.a.run.app
-// https://createfakealcoholics-tjb3vctcsa-bq.a.run.app
-// https://savefakeposts-tjb3vctcsa-bq.a.run.app
+// https://createsupportedlocations-e7pngdclvq-bq.a.run.app
+// https://createfakeusers-e7pngdclvq-bq.a.run.app
+// https://savefakeposts-e7pngdclvq-bq.a.run.app
 
 
 

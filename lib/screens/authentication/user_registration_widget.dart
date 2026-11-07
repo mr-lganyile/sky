@@ -275,9 +275,11 @@ class UserRegistrationState extends State<UserRegistrationWidget> {
                               );
                             },
                             placeholder: (c, s) {
+                              debug.log('place holder...');
                               return getCircularProgressBar();
                             },
                             errorWidget: (c, s, d) {
+                              debug.log('error exist \n${d.toString()}');
                               return getCircularProgressBar();
                             },
                           )

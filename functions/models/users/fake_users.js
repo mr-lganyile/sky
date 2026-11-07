@@ -432,15 +432,15 @@ class FakeUsers {
     }
 
     async createFakeUsers(online) {
-        await this.createFakeUmlaziUsers(online);
-        await this.createFakeDUTUsers(online);
+        // await this.createFakeUmlaziUsers(online);
+        // await this.createFakeDUTUsers(online);
         await this.createFakeUKZNUsers(online);
-        await this.createFakeMayvilleUsers(online);
-        await this.createFakeSydenhamUsers(online);
-        await this.createFakeSydenhamUsers(online);
+        // await this.createFakeMayvilleUsers(online);
+        // await this.createFakeSydenhamUsers(online);
+        // await this.createFakeSydenhamUsers(online);
         await this.createFakeDurbanCentralUsers(online);
-        await this.createFakeNandaUsers(online);
-        await this.createFakeHamarsdaleUsers(online);
+        // await this.createFakeNandaUsers(online);
+        // await this.createFakeHamarsdaleUsers(online);
     }
 }
 

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../controllers/clothing_post_controller.dart';
 import '../authentication/login_widget.dart';
+import '../utils/post_display_screen.dart';
 import '/models/posts/clothing.dart';
 import '/main.dart';
 import '/models/posts/identifeir_symbol.dart';
@@ -68,34 +69,54 @@ class ClothsPostCreationState extends State<ClothsPostCreationScreen> {
     );
   }
 
-  Widget displayClothsPostImage(String clothsPostImageURL) {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: horizontalImageDisplayPadding),
-      child: AspectRatio(
-        aspectRatio: 2 / 2,
-        child: CachedNetworkImage(
-          key: UniqueKey(),
-          fit: BoxFit.cover,
-          imageUrl: clothsPostImageURL,
-          fadeOutCurve: Curves.easeOutExpo,
-          imageBuilder: (c, provider) {
-            return Container(
-              //margin: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width/8) ,
-              decoration: BoxDecoration(
-                color: backgroundResourcesColor,
-                borderRadius: BorderRadius.circular(20),
-                image: DecorationImage(fit: BoxFit.cover, image: provider),
+  Future<String> retrieveGrandPriceImageURL(String clothsPostImageURL) {
+    return reference.child(clothsPostImageURL).getDownloadURL();
+  }
+
+  Widget showClothsPostImage(String clothsPostImageURL) {
+    return FutureBuilder(
+      future: retrieveGrandPriceImageURL(clothsPostImageURL),
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          return AspectRatio(
+            aspectRatio: 2 / 2,
+            child: Center(
+              child: CachedNetworkImage(
+                key: UniqueKey(),
+                fit: BoxFit.cover,
+                imageUrl: snapshot.data as String,
+                fadeOutCurve: Curves.easeOutExpo,
+                imageBuilder: (c, provider) {
+                  return Container(
+                    margin: EdgeInsets.only(bottom: 20, left: 20, right: 20),
+                    height: double.maxFinite,
+                    width: double.maxFinite,
+                    decoration: BoxDecoration(
+                      color: backgroundResourcesColor,
+                      borderRadius: BorderRadius.circular(20),
+                      image: DecorationImage(
+                        image: provider,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  );
+                },
+                placeholder: (c, s) {
+                  return getCircularProgressBar();
+                },
+                errorWidget: (c, s, d) {
+                  return getCircularProgressBar();
+                },
               ),
-            );
-          },
-          placeholder: (c, s) {
-            return getCircularProgressBar();
-          },
-          errorWidget: (c, s, d) {
-            return getCircularProgressBar();
-          },
-        ),
-      ),
+            ),
+          );
+        } else if (snapshot.hasError) {
+          debug.log('Error Fetching Clothing Image - ${snapshot.error}');
+          return getCircularProgressBar();
+        } else {
+          return getCircularProgressBar();
+        }
+      },
     );
   }
 
@@ -122,7 +143,7 @@ class ClothsPostCreationState extends State<ClothsPostCreationScreen> {
               break;
             default:
               getSnapbar('Saved', 'Post Successfully Created');
-              Get.to(() => ClothingPostDisplayScreen());
+              Get.to(() => PostDisplayScreen());
           }
         });
       },
@@ -428,27 +449,25 @@ class ClothsPostCreationState extends State<ClothsPostCreationScreen> {
           ),
         ),*/
         SizedBox(height: 10),
-        Container(
-          padding: EdgeInsets.only(right: 30, left: 30, bottom: 10),
-          width: double.maxFinite,
-          height: MediaQuery.of(context).size.height * 0.4,
-          child: Stack(
-            children: [
-              GetBuilder<ClothingPostController>(
-                builder: (_) {
-                  String clothsPostImageURL =
-                      postController.clothing.clothsPostImageURL!;
-                  return clothsPostImageURL.isNotEmpty
-                      ? displayClothsPostImage(clothsPostImageURL)
-                      : SizedBox.shrink();
-                },
-              ),
-              GetBuilder<ClothingPostController>(
-                builder: (_) => IdentifeirSymbolsGridWidget(),
-              ),
-            ],
-          ),
+        GetBuilder<ClothingPostController>(
+          builder: (_) {
+            return Stack(
+              children: [
+                showClothsPostImage(postController.clothsPostImageURL),
+                GetBuilder<ClothingPostController>(
+                  builder: (_) => Container(
+                    padding: EdgeInsets.only(right: 30, left: 30, bottom: 10),
+                    width: double.maxFinite,
+                    height: MediaQuery.of(context).size.height * 0.4,
+                    child: IdentifeirSymbolsGridWidget(),
+                  ),
+                ),
+                // IdentifeirSymbolsGridWidget(),
+              ],
+            );
+          },
         ),
+
         // Identifeir Symbol Info
         SizedBox(
           height: MediaQuery.of(context).size.height * 0.2,

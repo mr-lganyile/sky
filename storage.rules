@@ -27,7 +27,7 @@ service firebase.storage {
     }
 
     match /{host}/clothing_posts/{image}{
-      allow create: if request.auth != null && isValidContentType(request.resource) && isValidFileSize(request.resource);
+      allow create;//: if request.auth != null && isValidContentType(request.resource) && isValidFileSize(request.resource);
       allow update, delete: if false;
       allow read;
     }
