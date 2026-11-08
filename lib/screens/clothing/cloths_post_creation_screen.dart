@@ -20,8 +20,6 @@ class ClothsPostCreationScreen extends StatefulWidget {
 }
 
 class ClothsPostCreationState extends State<ClothsPostCreationScreen> {
-  // late Offset currentPosition;
-
   final double initialXCoordinate = 50;
   final double initialYCoordinate = 50;
   final double identifierGab = 50;
@@ -78,40 +76,33 @@ class ClothsPostCreationState extends State<ClothsPostCreationScreen> {
       future: retrieveGrandPriceImageURL(clothsPostImageURL),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
-          return AspectRatio(
-            aspectRatio: 2 / 2,
-            child: Center(
-              child: CachedNetworkImage(
-                key: UniqueKey(),
-                fit: BoxFit.cover,
-                imageUrl: snapshot.data as String,
-                fadeOutCurve: Curves.easeOutExpo,
-                imageBuilder: (c, provider) {
-                  return Container(
-                    margin: EdgeInsets.only(bottom: 20, left: 20, right: 20),
-                    height: double.maxFinite,
-                    width: double.maxFinite,
-                    decoration: BoxDecoration(
-                      color: backgroundResourcesColor,
-                      borderRadius: BorderRadius.circular(20),
-                      image: DecorationImage(
-                        image: provider,
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  );
-                },
-                placeholder: (c, s) {
-                  return getCircularProgressBar();
-                },
-                errorWidget: (c, s, d) {
-                  return getCircularProgressBar();
-                },
-              ),
+          return Center(
+            child: CachedNetworkImage(
+              key: UniqueKey(),
+              fit: BoxFit.cover,
+              imageUrl: snapshot.data as String,
+              fadeOutCurve: Curves.easeOutExpo,
+              imageBuilder: (c, provider) {
+                return Container(
+                  margin: EdgeInsets.only(bottom: 20, left: 20, right: 20),
+                  height: double.maxFinite,
+                  width: double.maxFinite,
+                  decoration: BoxDecoration(
+                    color: backgroundResourcesColor,
+                    borderRadius: BorderRadius.circular(20),
+                    image: DecorationImage(image: provider, fit: BoxFit.cover),
+                  ),
+                );
+              },
+              placeholder: (c, s) {
+                return getCircularProgressBar();
+              },
+              errorWidget: (c, s, d) {
+                return getCircularProgressBar();
+              },
             ),
           );
         } else if (snapshot.hasError) {
-          debug.log('Error Fetching Clothing Image - ${snapshot.error}');
           return getCircularProgressBar();
         } else {
           return getCircularProgressBar();
@@ -448,17 +439,30 @@ class ClothsPostCreationState extends State<ClothsPostCreationScreen> {
             style: TextStyle(fontSize: 20, color: MyApplication.logoColor1),
           ),
         ),*/
+        // Identifeirs
         SizedBox(height: 10),
         GetBuilder<ClothingPostController>(
           builder: (_) {
             return Stack(
               children: [
-                showClothsPostImage(postController.clothsPostImageURL),
+                SizedBox(
+                  height:
+                      postController.clothing.clothsPostImageURL == null ||
+                          postController.clothing.clothsPostImageURL!.isEmpty
+                      ? MediaQuery.of(context).size.height * 0.4
+                      : MediaQuery.of(context).size.height * 0.65,
+                  child: showClothsPostImage(
+                    postController.clothing.clothsPostImageURL!,
+                  ),
+                ),
                 GetBuilder<ClothingPostController>(
                   builder: (_) => Container(
-                    padding: EdgeInsets.only(right: 30, left: 30, bottom: 10),
-                    width: double.maxFinite,
-                    height: MediaQuery.of(context).size.height * 0.4,
+                    height:
+                        postController.clothing.clothsPostImageURL == null ||
+                            postController.clothing.clothsPostImageURL!.isEmpty
+                        ? MediaQuery.of(context).size.height * 0.4
+                        : MediaQuery.of(context).size.height * 0.65,
+                    margin: EdgeInsets.only(left: 20, right: 20),
                     child: IdentifeirSymbolsGridWidget(),
                   ),
                 ),
@@ -467,7 +471,12 @@ class ClothsPostCreationState extends State<ClothsPostCreationScreen> {
             );
           },
         ),
-
+        SizedBox(
+          width: double.maxFinite,
+          height: MediaQuery.of(context).size.height * 0.05,
+          child: addIdentifiers(),
+        ),
+        SizedBox(height: 10),
         // Identifeir Symbol Info
         SizedBox(
           height: MediaQuery.of(context).size.height * 0.2,
@@ -555,12 +564,6 @@ class ClothsPostCreationState extends State<ClothsPostCreationScreen> {
               ),
             ],
           ),
-        ),
-        // Identifeirs
-        SizedBox(
-          width: double.maxFinite,
-          height: MediaQuery.of(context).size.height * 0.05,
-          child: addIdentifiers(),
         ),
         // Buttons [prev, refresh & next]
         SizedBox(

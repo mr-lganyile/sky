@@ -73,7 +73,7 @@ class ClothingPostDisplayScreenState extends State<ClothingPostDisplayScreen> {
             }),
           );
         } else if (snapshot.hasError) {
-          debug.log("Error Fetching Past Post Data *** - ${snapshot.error}");
+          // debug.log("Error Fetching Past Post Data *** - ${snapshot.error}");
           return getCircularProgressBar();
         } else {
           return getCircularProgressBar();

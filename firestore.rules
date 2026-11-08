@@ -205,7 +205,7 @@ service cloud.firestore {
 
       allow read;
 
-      allow update: if false;
+      allow update;
 
       allow delete: if request.auth != null && 
       resource.data.postCreator.phoneNumber == request.auth.uid;

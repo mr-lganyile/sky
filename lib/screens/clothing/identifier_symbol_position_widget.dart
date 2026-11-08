@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sky/screens/utils/globals.dart';
-import '../../controllers/alcohol_post_controller.dart';
 import '../../controllers/clothing_post_controller.dart';
 import '../../main.dart';
 import '/models/posts/identifeir_symbol.dart';

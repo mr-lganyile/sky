@@ -20,6 +20,7 @@ import 'package:firebase_phone_auth_handler/firebase_phone_auth_handler.dart';
 
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 
+import 'screens/utils/post_creation_widget.dart';
 import 'screens/utils/post_display_screen.dart';
 
 // Branching Strategy - Trunk-Based Dev
@@ -236,6 +237,7 @@ class _MyApplicationState extends State<MyApplication> {
         ),
         // Make sure to create a draw given there are groups belonging to the host's location.
         home: PostDisplayScreen(),
+        // home: PostCreationWidget(),
       ),
     );
   }

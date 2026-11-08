@@ -1,7 +1,11 @@
 enum Trackable {
   numberOfLikes,
   numberOfDislikes,
-  numberOfIgnores,
-  numberOfHugs,
-  numberOfPhoneNumberRequests,
+  numberOfAwards,
+  numberOfKisses,
+  numberOfFallingAsleep,
+  numberOfGqa,
+  numberOfHandShakes,
+  numberOfDaught,
+  numberOfToBin,
 }

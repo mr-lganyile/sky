@@ -7,9 +7,14 @@ class IdentifeirSymbol {
   double? clothingPrice;
   int? numberOfLikes;
   int? numberOfDislikes;
-  int? numberOfIgnores;
-  int? numberOfHugs;
-  int? numberOfPhoneNumberRequests;
+  int? numberOfAwards;
+  int? numberOfKisses;
+  int? numberOfFallingAsleep;
+
+  int? numberOfGqa;
+  int? numberOfHandShakes;
+  int? numberOfDaught;
+  int? numberOfToBin;
 
   // clothes identifiers [# $ x % & * @...]
   IdentifeirSymbol({
@@ -19,9 +24,13 @@ class IdentifeirSymbol {
     this.isUsed = false,
     this.numberOfLikes = 0,
     this.numberOfDislikes = 0,
-    this.numberOfIgnores = 0,
-    this.numberOfHugs = 0,
-    this.numberOfPhoneNumberRequests = 0,
+    this.numberOfAwards = 0,
+    this.numberOfKisses = 0,
+    this.numberOfFallingAsleep = 0,
+    this.numberOfGqa = 0,
+    this.numberOfHandShakes = 0,
+    this.numberOfDaught = 0,
+    this.numberOfToBin = 0,
   });
 
   int computeNumberOfReactionDigits() {
@@ -33,10 +42,8 @@ class IdentifeirSymbol {
       numberOfReactionDigits += 2;
     } else if (numberOfLikes! < 1000) {
       numberOfReactionDigits += 3;
-    } else if (numberOfLikes! < 10000) {
-      numberOfReactionDigits += 4;
     } else {
-      numberOfReactionDigits += 5;
+      numberOfReactionDigits += 4;
     }
 
     if (numberOfDislikes! < 10) {
@@ -49,31 +56,71 @@ class IdentifeirSymbol {
       numberOfReactionDigits += 4;
     }
 
-    if (numberOfIgnores! < 10) {
+    if (numberOfAwards! < 10) {
       numberOfReactionDigits++;
-    } else if (numberOfIgnores! < 100) {
+    } else if (numberOfAwards! < 100) {
       numberOfReactionDigits += 2;
-    } else if (numberOfIgnores! < 1000) {
+    } else if (numberOfAwards! < 1000) {
       numberOfReactionDigits += 3;
     } else {
       numberOfReactionDigits += 4;
     }
 
-    if (numberOfHugs! < 10) {
+    if (numberOfKisses! < 10) {
       numberOfReactionDigits++;
-    } else if (numberOfHugs! < 100) {
+    } else if (numberOfKisses! < 100) {
       numberOfReactionDigits += 2;
-    } else if (numberOfHugs! < 1000) {
+    } else if (numberOfKisses! < 1000) {
       numberOfReactionDigits += 3;
     } else {
       numberOfReactionDigits += 4;
     }
 
-    if (numberOfPhoneNumberRequests! < 10) {
+    if (numberOfFallingAsleep! < 10) {
       numberOfReactionDigits++;
-    } else if (numberOfPhoneNumberRequests! < 100) {
+    } else if (numberOfFallingAsleep! < 100) {
       numberOfReactionDigits += 2;
-    } else if (numberOfPhoneNumberRequests! < 1000) {
+    } else if (numberOfFallingAsleep! < 1000) {
+      numberOfReactionDigits += 3;
+    } else {
+      numberOfReactionDigits += 4;
+    }
+
+    if (numberOfGqa! < 10) {
+      numberOfReactionDigits++;
+    } else if (numberOfGqa! < 100) {
+      numberOfReactionDigits += 2;
+    } else if (numberOfGqa! < 1000) {
+      numberOfReactionDigits += 3;
+    } else {
+      numberOfReactionDigits += 4;
+    }
+
+    if (numberOfHandShakes! < 10) {
+      numberOfReactionDigits++;
+    } else if (numberOfHandShakes! < 100) {
+      numberOfReactionDigits += 2;
+    } else if (numberOfHandShakes! < 1000) {
+      numberOfReactionDigits += 3;
+    } else {
+      numberOfReactionDigits += 4;
+    }
+
+    if (numberOfDaught! < 10) {
+      numberOfReactionDigits++;
+    } else if (numberOfDaught! < 100) {
+      numberOfReactionDigits += 2;
+    } else if (numberOfDaught! < 1000) {
+      numberOfReactionDigits += 3;
+    } else {
+      numberOfReactionDigits += 4;
+    }
+
+    if (numberOfToBin! < 10) {
+      numberOfReactionDigits++;
+    } else if (numberOfToBin! < 100) {
+      numberOfReactionDigits += 2;
+    } else if (numberOfToBin! < 1000) {
       numberOfReactionDigits += 3;
     } else {
       numberOfReactionDigits += 4;
@@ -145,9 +192,13 @@ class IdentifeirSymbol {
     'clothingPrice': clothingPrice,
     'numberOfLikes': numberOfLikes,
     'numberOfDislikes': numberOfDislikes,
-    'numberOfIgnores': numberOfIgnores,
-    'numberOfHugs': numberOfHugs,
-    'numberOfPhoneNumberRequests': numberOfPhoneNumberRequests,
+    'numberOfAwards': numberOfAwards,
+    'numberOfKisses': numberOfKisses,
+    'numberOfFallingAsleep': numberOfFallingAsleep,
+    'numberOfGqa': numberOfGqa,
+    'numberOfHandShakes': numberOfHandShakes,
+    'numberOfDaught': numberOfDaught,
+    'numberOfToBin': numberOfToBin,
   };
 
   factory IdentifeirSymbol.fromJson(Map<String, dynamic> json) =>
@@ -158,8 +209,12 @@ class IdentifeirSymbol {
         isUsed: json['isUsed'],
         numberOfLikes: json['numberOfLikes'],
         numberOfDislikes: json['numberOfDislikes'],
-        numberOfIgnores: json['numberOfIgnores'],
-        numberOfHugs: json['numberOfHugs'],
-        numberOfPhoneNumberRequests: json['numberOfPhoneNumberRequests'],
+        numberOfAwards: json['numberOfAwards'],
+        numberOfKisses: json['numberOfKisses'],
+        numberOfFallingAsleep: json['numberOfFallingAsleep'],
+        numberOfGqa: json['numberOfGqa'],
+        numberOfHandShakes: json['numberOfHandShakes'],
+        numberOfDaught: json['numberOfDaught'],
+        numberOfToBin: json['numberOfToBin'],
       );
 }

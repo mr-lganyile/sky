@@ -17,7 +17,7 @@ class IdentifeirSymbolsGridWidget extends StatelessWidget {
 
   IdentifeirSymbolsGridWidget({
     this.crossAxisCount = 10,
-    this.itemCount = 80,
+    this.itemCount = 500, // useful because the grid is not scrollable.
     this.crossAxisSpacing = 1,
     this.mainAxisSpacing = 1,
   });
@@ -27,6 +27,7 @@ class IdentifeirSymbolsGridWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return GridView.builder(
       primary: false,
+      physics: NeverScrollableScrollPhysics(),
       itemCount: itemCount,
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         mainAxisSpacing: mainAxisSpacing, // vertical spaces

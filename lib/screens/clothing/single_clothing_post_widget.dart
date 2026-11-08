@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:hugeicons/hugeicons.dart';
 import '../../controllers/clothing_post_controller.dart';
 import '../../models/posts/trackable.dart';
 import '/models/posts/clothing_post.dart';
@@ -32,42 +33,36 @@ class SingleClothingPostState extends State<SingleClothingPostWidget> {
   }
 
   double calculateReactionsSpace(double width, int countNumberOfDigits) {
-    if (countNumberOfDigits <= 10) {
-      return width;
-    } else if (countNumberOfDigits <= 15) {
-      return width + width * 0.1;
+    // remember so far there are 8 possible reactions.
+    if (countNumberOfDigits <= 9) {
+      debug.log('$countNumberOfDigits width * 1.5');
+      return width * 1.5;
+    } else if (countNumberOfDigits <= 18) {
+      debug.log('$countNumberOfDigits width * 1.7');
+      return width * 1.7;
+    } else if (countNumberOfDigits <= 27) {
+      debug.log('$countNumberOfDigits width * 1.9');
+      return width * 1.9;
     } else {
-      return width + width * 0.2;
+      debug.log('$countNumberOfDigits width * 2');
+      return width * 2;
     }
   }
 
-  void manageReaction(int identifeirIndex, Trackable trackable, bool increase) {
-    Future<TrackableUpdateStatus> status = postController
-        .updateTrackableQuantify(
-          widget.post.postId,
-          identifeirIndex,
-          trackable,
-          increase,
-        );
-
-    status.then((value) {
-      if (value == TrackableUpdateStatus.liked) {
-        getSnapbar('Info', 'Like Noted');
-      } else if (value == TrackableUpdateStatus.disliked) {
-        getSnapbar('Info', 'Dislike Noted');
-      } else if (value == TrackableUpdateStatus.huged) {
-        getSnapbar('Info', 'Hug Noted');
-      } else if (value == TrackableUpdateStatus.ignored) {
-        getSnapbar('Info', 'Ignore Noted');
-      } else if (value == TrackableUpdateStatus.phoneNumberRequested) {
-        getSnapbar('Info', 'Phone Number Request Noted');
-      }
-    });
+  void manageReaction(int orderIndex, Trackable trackable, bool increase) {
+    postController.updateTrackableQuantify(
+      widget.post.postId,
+      orderIndex,
+      trackable,
+      increase,
+    );
   }
 
-  Widget identifeirSymbolsInfo(IdentifeirSymbol identifierSymbol) {
+  Widget identifeirSymbolsInfo(
+    int orderIndex,
+    IdentifeirSymbol identifierSymbol,
+  ) {
     double fontSize = 15;
-    Color actionIconColor = MyApplication.attractiveColor1;
     return Builder(
       builder: (context) {
         return SizedBox(
@@ -141,78 +136,27 @@ class SingleClothingPostState extends State<SingleClothingPostWidget> {
                 // note so far a maximum of 4 digits for each reaction can be displays without having any textoverflow error.
                 child: Row(
                   children: [
-                    // hug
+                    // award
                     IconButton(
                       color: Colors.white,
                       iconSize: MediaQuery.of(context).size.width * 0.06,
-                      icon: Icon(
-                        Icons.hourglass_bottom,
-                        color: actionIconColor,
+                      icon: HugeIcon(
+                        icon: HugeIcons.strokeRoundedAward01,
+                        color: Colors.lightGreen,
+                        size: 24.0,
                       ),
                       onPressed: () async {
                         manageReaction(
-                          identifierSymbol.identifeirIndex,
-                          Trackable.numberOfHugs,
+                          orderIndex,
+                          Trackable.numberOfAwards,
                           true,
                         );
                       },
                     ),
-                    // no of hugs
+                    // no of awards
                     Text(
                       Converter.convertNoOfReactions(
-                        identifierSymbol.numberOfHugs!,
-                      ),
-                      style: TextStyle(
-                        color: MyApplication.storesTextColor,
-                        fontWeight: identifierFontWeight,
-                        fontSize: fontSize,
-                      ),
-                    ),
-                    // phone number request
-                    IconButton(
-                      color: Colors.white,
-                      iconSize: MediaQuery.of(context).size.width * 0.06,
-                      icon: Icon(Icons.phone, color: actionIconColor),
-                      onPressed: () async {
-                        manageReaction(
-                          identifierSymbol.identifeirIndex,
-                          Trackable.numberOfPhoneNumberRequests,
-                          true,
-                        );
-                      },
-                    ),
-                    // no of phone number request
-                    Text(
-                      Converter.convertNoOfReactions(
-                        identifierSymbol.numberOfPhoneNumberRequests!,
-                      ),
-                      style: TextStyle(
-                        color: MyApplication.storesTextColor,
-                        fontWeight: identifierFontWeight,
-                        fontSize: fontSize,
-                      ),
-                    ),
-
-                    // ignore
-                    IconButton(
-                      color: Colors.white,
-                      iconSize: MediaQuery.of(context).size.width * 0.06,
-                      icon: Icon(
-                        Icons.hourglass_bottom,
-                        color: actionIconColor,
-                      ),
-                      onPressed: () async {
-                        manageReaction(
-                          identifierSymbol.identifeirIndex,
-                          Trackable.numberOfIgnores,
-                          true,
-                        );
-                      },
-                    ),
-                    // no of ignores
-                    Text(
-                      Converter.convertNoOfReactions(
-                        identifierSymbol.numberOfIgnores!,
+                        identifierSymbol.numberOfAwards!,
                       ),
                       style: TextStyle(
                         color: MyApplication.storesTextColor,
@@ -225,10 +169,14 @@ class SingleClothingPostState extends State<SingleClothingPostWidget> {
                     IconButton(
                       color: Colors.white,
                       iconSize: MediaQuery.of(context).size.width * 0.06,
-                      icon: Icon(Icons.arrow_upward, color: actionIconColor),
+                      icon: HugeIcon(
+                        icon: HugeIcons.strokeRoundedInLove,
+                        color: Colors.lightGreen,
+                        size: 24.0,
+                      ),
                       onPressed: () async {
                         manageReaction(
-                          identifierSymbol.identifeirIndex,
+                          orderIndex,
                           Trackable.numberOfLikes,
                           true,
                         );
@@ -245,14 +193,131 @@ class SingleClothingPostState extends State<SingleClothingPostWidget> {
                         fontSize: fontSize,
                       ),
                     ),
+
+                    // hand shake icon
+                    IconButton(
+                      color: Colors.white,
+                      iconSize: MediaQuery.of(context).size.width * 0.06,
+                      icon: HugeIcon(
+                        icon: HugeIcons.strokeRoundedHandshake,
+                        color: Colors.lightGreen,
+                        size: 24.0,
+                      ),
+                      onPressed: () async {
+                        manageReaction(
+                          orderIndex,
+                          Trackable.numberOfHandShakes,
+                          true,
+                        );
+                      },
+                    ),
+                    // no of hand shakes
+                    Text(
+                      Converter.convertNoOfReactions(
+                        identifierSymbol.numberOfHandShakes!,
+                      ),
+                      style: TextStyle(
+                        color: MyApplication.storesTextColor,
+                        fontWeight: identifierFontWeight,
+                        fontSize: fontSize,
+                      ),
+                    ),
+
+                    // gqa icon
+                    IconButton(
+                      color: Colors.white,
+                      iconSize: MediaQuery.of(context).size.width * 0.06,
+                      icon: HugeIcon(
+                        icon: HugeIcons.strokeRoundedPunch,
+                        color: Colors.lightGreen,
+                        size: 24.0,
+                      ),
+                      onPressed: () async {
+                        manageReaction(orderIndex, Trackable.numberOfGqa, true);
+                      },
+                    ),
+                    // no of gqa
+                    Text(
+                      Converter.convertNoOfReactions(
+                        identifierSymbol.numberOfGqa!,
+                      ),
+                      style: TextStyle(
+                        color: MyApplication.storesTextColor,
+                        fontWeight: identifierFontWeight,
+                        fontSize: fontSize,
+                      ),
+                    ),
+
+                    // kiss
+                    IconButton(
+                      color: Colors.white,
+                      iconSize: MediaQuery.of(context).size.width * 0.06,
+                      icon: HugeIcon(
+                        icon: HugeIcons.strokeRoundedKissing,
+                        color: Colors.lightGreen,
+                        size: 24.0,
+                      ),
+                      onPressed: () async {
+                        manageReaction(
+                          orderIndex,
+                          Trackable.numberOfKisses,
+                          true,
+                        );
+                      },
+                    ),
+                    // no of kisses
+                    Text(
+                      Converter.convertNoOfReactions(
+                        identifierSymbol.numberOfKisses!,
+                      ),
+                      style: TextStyle(
+                        color: MyApplication.storesTextColor,
+                        fontWeight: identifierFontWeight,
+                        fontSize: fontSize,
+                      ),
+                    ),
+
+                    // daught
+                    IconButton(
+                      color: Colors.white,
+                      iconSize: MediaQuery.of(context).size.width * 0.06,
+                      icon: HugeIcon(
+                        icon: HugeIcons.strokeRoundedMonocle01,
+                        color: Colors.red,
+                        size: 24.0,
+                      ),
+                      onPressed: () async {
+                        manageReaction(
+                          orderIndex,
+                          Trackable.numberOfDaught,
+                          true,
+                        );
+                      },
+                    ),
+                    // no of daught
+                    Text(
+                      Converter.convertNoOfReactions(
+                        identifierSymbol.numberOfDaught!,
+                      ),
+                      style: TextStyle(
+                        color: MyApplication.storesTextColor,
+                        fontWeight: identifierFontWeight,
+                        fontSize: fontSize,
+                      ),
+                    ),
+
                     // dislike icon
                     IconButton(
                       color: Colors.white,
                       iconSize: MediaQuery.of(context).size.width * 0.06,
-                      icon: Icon(Icons.arrow_downward, color: actionIconColor),
+                      icon: HugeIcon(
+                        icon: HugeIcons.strokeRoundedDispleased,
+                        color: Colors.red,
+                        size: 24.0,
+                      ),
                       onPressed: () async {
                         manageReaction(
-                          identifierSymbol.identifeirIndex,
+                          orderIndex,
                           Trackable.numberOfDislikes,
                           true,
                         );
@@ -262,6 +327,64 @@ class SingleClothingPostState extends State<SingleClothingPostWidget> {
                     Text(
                       Converter.convertNoOfReactions(
                         identifierSymbol.numberOfDislikes!,
+                      ),
+                      style: TextStyle(
+                        color: MyApplication.storesTextColor,
+                        fontWeight: identifierFontWeight,
+                        fontSize: fontSize,
+                      ),
+                    ),
+
+                    // falling asleep
+                    IconButton(
+                      color: Colors.white,
+                      iconSize: MediaQuery.of(context).size.width * 0.06,
+                      icon: HugeIcon(
+                        icon: HugeIcons.strokeRoundedSleeping,
+                        color: Colors.red,
+                        size: 24.0,
+                      ),
+                      onPressed: () async {
+                        manageReaction(
+                          orderIndex,
+                          Trackable.numberOfFallingAsleep,
+                          true,
+                        );
+                      },
+                    ),
+                    // no of falling asleep
+                    Text(
+                      Converter.convertNoOfReactions(
+                        identifierSymbol.numberOfFallingAsleep!,
+                      ),
+                      style: TextStyle(
+                        color: MyApplication.storesTextColor,
+                        fontWeight: identifierFontWeight,
+                        fontSize: fontSize,
+                      ),
+                    ),
+
+                    // to bin icon
+                    IconButton(
+                      color: Colors.white,
+                      iconSize: MediaQuery.of(context).size.width * 0.06,
+                      icon: HugeIcon(
+                        icon: HugeIcons.strokeRoundedTrash,
+                        color: Colors.red,
+                        size: 24.0,
+                      ),
+                      onPressed: () async {
+                        manageReaction(
+                          orderIndex,
+                          Trackable.numberOfToBin,
+                          true,
+                        );
+                      },
+                    ),
+                    // no of to bin
+                    Text(
+                      Converter.convertNoOfReactions(
+                        identifierSymbol.numberOfToBin!,
                       ),
                       style: TextStyle(
                         color: MyApplication.storesTextColor,
@@ -300,9 +423,10 @@ class SingleClothingPostState extends State<SingleClothingPostWidget> {
                   child: ListView.builder(
                     scrollDirection: Axis.horizontal,
                     itemCount: widget.post.clothing.identifierSymbols.length,
-                    itemBuilder: ((context, index) {
+                    itemBuilder: ((context, orderIndex) {
                       return identifeirSymbolsInfo(
-                        widget.post.clothing.identifierSymbols[index]!,
+                        orderIndex,
+                        widget.post.clothing.identifierSymbols[orderIndex]!,
                       );
                     }),
                   ),
@@ -433,7 +557,6 @@ class SingleClothingPostState extends State<SingleClothingPostWidget> {
                 },
               );
             } else if (snapshot.hasError) {
-              debug.log('Error Fetching Post Image - ${snapshot.error}');
               return getCircularProgressBar();
             } else {
               return getCircularProgressBar();

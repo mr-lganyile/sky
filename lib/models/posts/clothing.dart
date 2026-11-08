@@ -20,14 +20,16 @@ class Clothing {
   }
 
   void addClothing(IdentifeirSymbol identifeirSymbol) {
-    identifierSymbols.putIfAbsent(++orderIndex, () => identifeirSymbol);
-    debug.log('order index $orderIndex');
+    if (canAddMoreCloths()) {
+      identifierSymbols.putIfAbsent(++orderIndex, () => identifeirSymbol);
+      debug.log('order index $orderIndex');
+    }
   }
 
   bool canRemoveClothing() => orderIndex >= 0;
 
   int removeClothing() {
-    if (orderIndex >= 0) {
+    if (canRemoveClothing()) {
       int toReturn = identifierSymbols[orderIndex]!.identifeirIndex;
       identifierSymbols.remove(orderIndex--);
       debug.log('order index $orderIndex');

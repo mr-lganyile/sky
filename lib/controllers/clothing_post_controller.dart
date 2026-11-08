@@ -28,11 +28,16 @@ enum ClothingPostStatus {
 }
 
 enum TrackableUpdateStatus {
-  ignored,
-  huged,
-  phoneNumberRequested,
+  awarded,
   liked,
+  handShaked,
+  punched,
+  kissed,
+
+  daughted,
+  fallAsleep,
   disliked,
+  trashed,
 }
 
 class ClothingPostController extends GetxController {
@@ -54,9 +59,14 @@ class ClothingPostController extends GetxController {
   });
 
   // ======================Cloths Post [Start]======================
-  Rx<String> _clothsPostImageURL = Rx('');
-  String get clothsPostImageURL => _clothsPostImageURL.value;
+
   /*
+  Rx<String> _clothsPostImageURL = Rx(
+    // '/durban central/clothing_posts/0LAa4OFT9OtDi5L6iP9t',
+    '',
+  );
+  String get clothsPostImageURL => _clothsPostImageURL.value;
+  
   Rx<File?> _clothsPostImage = Rx(null);
   File? get clothsPostImage => _clothsPostImage.value;*/
 
@@ -79,10 +89,11 @@ class ClothingPostController extends GetxController {
   IdentifeirSymbol? get currentIdentifeirSymbol =>
       _currentIdentifeirSymbol.value;
 
+  /*
   void setClothsPostImageURL(String clothsImageURL) {
     _clothsPostImageURL = Rx(clothsImageURL);
     update();
-  }
+  } */
 
   Future<TrackableUpdateStatus> updateTrackableQuantify(
     String postId,
@@ -100,32 +111,54 @@ class ClothingPostController extends GetxController {
     String data;
 
     switch (trackable) {
+      case Trackable.numberOfAwards:
+        data = 'numberOfAwards';
+        result = TrackableUpdateStatus.awarded;
+        break;
       case Trackable.numberOfLikes:
-        data = 'clothing[identifierSymbols][$identifeirIndex][numberOfLikes]';
+        data = 'numberOfLikes';
         result = TrackableUpdateStatus.liked;
         break;
+      case Trackable.numberOfHandShakes:
+        data = 'numberOfHandShakes';
+        result = TrackableUpdateStatus.handShaked;
+        break;
+      case Trackable.numberOfGqa:
+        data = 'numberOfGqa';
+        result = TrackableUpdateStatus.punched;
+        break;
+      case Trackable.numberOfKisses:
+        data = 'numberOfKisses';
+        result = TrackableUpdateStatus.kissed;
+        break;
+      case Trackable.numberOfDaught:
+        data = 'numberOfDaught';
+        result = TrackableUpdateStatus.daughted;
+        break;
       case Trackable.numberOfDislikes:
-        data =
-            'clothing[identifierSymbols][$identifeirIndex][numberOfDislikes]';
+        data = 'numberOfDislikes';
         result = TrackableUpdateStatus.disliked;
         break;
-      case Trackable.numberOfHugs:
-        data = 'clothing[identifierSymbols][$identifeirIndex][numberOfHugs]';
-        result = TrackableUpdateStatus.huged;
-        break;
-      case Trackable.numberOfIgnores:
-        data = 'clothing[identifierSymbols][$identifeirIndex][numberOfIgnores]';
-        result = TrackableUpdateStatus.ignored;
+      case Trackable.numberOfFallingAsleep:
+        data = 'numberOfFallingAsleep';
+        result = TrackableUpdateStatus.fallAsleep;
         break;
       default:
-        data =
-            'clothing[identifierSymbols][$identifeirIndex][numberOfPhoneNumberRequests]';
-        result = TrackableUpdateStatus.phoneNumberRequested;
+        data = 'numberOfToBin';
+        result = TrackableUpdateStatus.trashed;
     }
 
-    reference.update({
-      data: increase ? FieldValue.increment(1) : FieldValue.increment(-1),
-    });
+    debug.log(data);
+
+    reference.set({
+      'clothing': {
+        'identifierSymbols': {
+          '$identifeirIndex': {
+            data: increase ? FieldValue.increment(1) : FieldValue.increment(-1),
+          },
+        },
+      },
+    }, SetOptions(merge: true));
     return result;
   }
 
@@ -232,7 +265,7 @@ class ClothingPostController extends GetxController {
         ).value;
         String URL = trimmedURL(clothsPostImageURL);
         clothing.setClothsPostImageURL(URL);
-        setClothsPostImageURL(URL);
+        // setClothsPostImageURL(URL);
 
         // Get.snackbar('Image Status', 'Image File Successfully Captured.');
       } else {
