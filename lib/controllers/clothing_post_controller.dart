@@ -4,6 +4,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import '../models/posts/trackable.dart';
@@ -88,12 +90,6 @@ class ClothingPostController extends GetxController {
   Rx<IdentifeirSymbol?> _currentIdentifeirSymbol = Rx(null);
   IdentifeirSymbol? get currentIdentifeirSymbol =>
       _currentIdentifeirSymbol.value;
-
-  /*
-  void setClothsPostImageURL(String clothsImageURL) {
-    _clothsPostImageURL = Rx(clothsImageURL);
-    update();
-  } */
 
   Future<TrackableUpdateStatus> updateTrackableQuantify(
     String postId,
@@ -202,7 +198,7 @@ class ClothingPostController extends GetxController {
   void captureClothsPostImage() async {
     AbstractUser? user = getCurrentlyLoggenInUser();
     if (user == null) {
-      Get.snackbar('Error', 'Error Login Required');
+      getSnapbar('Error', 'Error Login Required');
     } else {
       final pickedImageFile = await ImagePicker().pickImage(
         source: ImageSource.camera,
@@ -231,7 +227,7 @@ class ClothingPostController extends GetxController {
         // Get.snackbar('Image Status', 'Image File Successfully Captured.');
         update();
       } else {
-        Get.snackbar('Error', 'Image Wasn\'t Captured.');
+        getSnapbar('Error', 'Image Wasn\'t Captured.');
       }
     }
   }
@@ -239,7 +235,7 @@ class ClothingPostController extends GetxController {
   void chooseClothsPostImageFromGallery() async {
     AbstractUser? user = getCurrentlyLoggenInUser();
     if (user == null) {
-      Get.snackbar('Error', 'Error Login Required');
+      getSnapbar('Error', 'Error Login Required');
     } else {
       final pickedImageFile = await ImagePicker().pickImage(
         source: ImageSource.gallery,
@@ -269,7 +265,7 @@ class ClothingPostController extends GetxController {
 
         // Get.snackbar('Image Status', 'Image File Successfully Captured.');
       } else {
-        Get.snackbar('Error', 'Image Wasn\'t Captured.');
+        getSnapbar('Error', 'Image Wasn\'t Captured.');
       }
       update();
     }
@@ -518,8 +514,8 @@ class ClothingPostController extends GetxController {
               post.postCreator.area.sectionName,
             ).townOrInstitutionName,
           );
-          ;
-          Get.snackbar('Error', 'Only $host Users May Comment.');
+
+          getSnapbar('Error', 'Only $host Users May Comment.');
         }
       }
     });

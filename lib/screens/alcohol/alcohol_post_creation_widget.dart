@@ -788,9 +788,9 @@ class AlcoholPostCreationWidgetState extends State<AlcoholPostCreationWidget> {
             // disposeVideoControllers();
             Get.to(() => PostDisplayScreen());
           } else if (value == AlcoholPostStatus.loginRequired) {
-            Get.snackbar('Error', 'Login Required.');
+            getSnapbar('Error', 'Login Required.');
           } else if (value == AlcoholPostStatus.answerAtleastOneQuestion) {
-            Get.snackbar('Error', 'Answer Atleast One Question.');
+            getSnapbar('Error', 'Answer Atleast One Question.');
           }
         });
       },

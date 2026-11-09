@@ -8,12 +8,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:sky/models/locations/supported_area.dart';
 
 import 'dart:developer' as debug;
 
 import '../models/converter.dart';
-import '../models/locations/section_name.dart';
 import '../models/locations/town_or_institution.dart';
 import '../models/posts/alcohol_post.dart';
 import '../models/posts/post_comment.dart';
@@ -195,7 +193,7 @@ class AlcoholPostController extends GetxController {
   void captureWhereWereYouImage() async {
     AbstractUser? user = getCurrentlyLoggenInUser();
     if (user == null) {
-      Get.snackbar('Error', 'Error Login Required');
+      getSnapbar('Error', 'Error Login Required');
     } else {
       final pickedImageFile = await ImagePicker().pickImage(
         source: ImageSource.camera,
@@ -223,7 +221,7 @@ class AlcoholPostController extends GetxController {
         // Get.snackbar('Image Status', 'Image File Successfully Captured.');
         update();
       } else {
-        Get.snackbar('Error', 'Image Wasn\'t Captured.');
+        getSnapbar('Error', 'Image Wasn\'t Captured.');
       }
     }
   }
@@ -231,7 +229,7 @@ class AlcoholPostController extends GetxController {
   void captureWhereWereYouVideo(ImageSource imageSource) async {
     AbstractUser? user = getCurrentlyLoggenInUser();
     if (user == null) {
-      Get.snackbar('Error', 'Error Login Required');
+      getSnapbar('Error', 'Error Login Required');
     }
 
     final pickedVideoFile = await ImagePicker().pickVideo(source: imageSource);
@@ -262,7 +260,7 @@ class AlcoholPostController extends GetxController {
       //Get.snackbar('Video Status', 'Video File Successfully Captured.');
       update();
     } else {
-      Get.snackbar('Error', 'Video Wasn\'t Captured.');
+      getSnapbar('Error', 'Video Wasn\'t Captured.');
     }
   }
 
@@ -315,7 +313,7 @@ class AlcoholPostController extends GetxController {
   void captureWhoWereYouWithImage() async {
     AbstractUser? user = getCurrentlyLoggenInUser();
     if (user == null) {
-      Get.snackbar('Error', 'Error Login Required');
+      getSnapbar('Error', 'Error Login Required');
     } else {
       final pickedImageFile = await ImagePicker().pickImage(
         source: ImageSource.camera,
@@ -343,7 +341,7 @@ class AlcoholPostController extends GetxController {
         // Get.snackbar('Image Status', 'Image File Successfully Captured.');
         update();
       } else {
-        Get.snackbar('Error', 'Image Wasn\'t Captured.');
+        getSnapbar('Error', 'Image Wasn\'t Captured.');
       }
     }
   }
@@ -351,7 +349,7 @@ class AlcoholPostController extends GetxController {
   void captureWhoWereYouWithVideo(ImageSource imageSource) async {
     AbstractUser? user = getCurrentlyLoggenInUser();
     if (user == null) {
-      Get.snackbar('Error', 'Error Login Required');
+      getSnapbar('Error', 'Error Login Required');
     }
 
     final pickedVideoFile = await ImagePicker().pickVideo(source: imageSource);
@@ -380,7 +378,7 @@ class AlcoholPostController extends GetxController {
       // Get.snackbar('Video Status', 'Video File Successfully Picked.');
       update();
     } else {
-      Get.snackbar('Error', 'Video Wasn\'t Picked.');
+      getSnapbar('Error', 'Video Wasn\'t Picked.');
     }
   }
 
@@ -418,7 +416,7 @@ class AlcoholPostController extends GetxController {
   void captureWhatHappenedVideo(ImageSource imageSource) async {
     AbstractUser? user = getCurrentlyLoggenInUser();
     if (user == null) {
-      Get.snackbar('Error', 'Error Login Required');
+      getSnapbar('Error', 'Error Login Required');
     }
 
     final pickedVideoFile = await ImagePicker().pickVideo(source: imageSource);
@@ -446,7 +444,7 @@ class AlcoholPostController extends GetxController {
 
       update();
     } else {
-      Get.snackbar('Error', 'Video Wasn\'t Captured.');
+      getSnapbar('Error', 'Video Wasn\'t Captured.');
     }
   }
   // ======================What happended? [End]======================
@@ -471,7 +469,7 @@ class AlcoholPostController extends GetxController {
   void captureWhatWereYouDrinkingImage() async {
     AbstractUser? user = getCurrentlyLoggenInUser();
     if (user == null) {
-      Get.snackbar('Error', 'Error Login Required');
+      getSnapbar('Error', 'Error Login Required');
     } else {
       final pickedImageFile = await ImagePicker().pickImage(
         source: ImageSource.camera,
@@ -498,7 +496,7 @@ class AlcoholPostController extends GetxController {
 
         update();
       } else {
-        Get.snackbar('Error', 'Image Wasn\'t Captured.');
+        getSnapbar('Error', 'Image Wasn\'t Captured.');
       }
     }
   }
@@ -803,8 +801,8 @@ enye ibheke ekhaya bonina, enye ibheke ekhaya boyise. ''',
               pastPost.postCreator.area.sectionName,
             ).townOrInstitutionName,
           );
-          ;
-          Get.snackbar('Error', 'Only $host Users May Comment.');
+
+          getSnapbar('Error', 'Only $host Users May Comment.');
         }
       }
     });

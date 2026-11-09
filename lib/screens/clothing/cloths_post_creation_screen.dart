@@ -192,7 +192,12 @@ class ClothsPostCreationState extends State<ClothsPostCreationScreen> {
         if (postController.clothing.canAddMoreCloths()) {
           postController.updateAllowMovementOfDraggable(true);
         }
-        getSnapbar('Note', 'Clothing Pointed.');
+        getSnapbar(
+          'Note',
+          'Clothing Pointed.',
+          icon: Icon(Icons.add),
+          borderColor: MyApplication.logoColor1,
+        );
       }
     },
   );
@@ -399,11 +404,15 @@ class ClothsPostCreationState extends State<ClothsPostCreationScreen> {
                 // Get.snackbar('Error', 'Login Required.');
                 Get.to(() => LoginWidget());
               } else if (value == ClothingPostStatus.noClothingImage) {
-                Get.snackbar('Error', 'No Image Uploaded.');
+                getSnapbar('Error', 'No Image Uploaded.');
               } else if (value == ClothingPostStatus.noClothingIdentified) {
-                Get.snackbar('Error', 'Identify Atleast One Clothing.');
+                getSnapbar('Error', 'Identify Atleast One Clothing.');
               } else {
-                Get.snackbar('Saved', 'Post Successfully Created.');
+                getSnapbar(
+                  'Saved',
+                  'Post Successfully Created.',
+                  icon: Icon(Icons.save_as_outlined),
+                );
                 Get.to(() => ClothingPostDisplayScreen());
               }
             });

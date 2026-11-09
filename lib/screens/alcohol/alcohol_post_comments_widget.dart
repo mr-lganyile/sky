@@ -99,7 +99,6 @@ class AlcoholPostCommentsWidgets extends StatelessWidget {
                         PostCommentWidget(postComment: comments[index])),
                   );
                 } else if (snapshot.hasError) {
-                  debug.log('Error: ${snapshot.error.toString()} ');
                   return getCircularProgressBar();
                 } else {
                   return getCircularProgressBar();

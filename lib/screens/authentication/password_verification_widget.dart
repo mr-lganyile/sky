@@ -126,7 +126,12 @@ class PasswordVerificationWidget extends StatelessWidget {
         if (user.password.compareTo(passwordEditingController.text) == 0) {
           if (user is User) {
             userController.loginUserUsingObject(user as User);
-            getSnapbar('Welcome', 'You Are Currently Logged in.');
+            getSnapbar(
+              'Welcome',
+              'You Are Currently Logged in.',
+              icon: Icon(Icons.login),
+              borderColor: MyApplication.logoColor1,
+            );
             sharedResourcesController.setShowPasswordVerificationProgressBar(
               false,
             );

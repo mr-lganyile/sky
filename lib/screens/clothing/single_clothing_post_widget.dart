@@ -35,16 +35,12 @@ class SingleClothingPostState extends State<SingleClothingPostWidget> {
   double calculateReactionsSpace(double width, int countNumberOfDigits) {
     // remember so far there are 8 possible reactions.
     if (countNumberOfDigits <= 9) {
-      debug.log('$countNumberOfDigits width * 1.5');
       return width * 1.5;
     } else if (countNumberOfDigits <= 18) {
-      debug.log('$countNumberOfDigits width * 1.7');
       return width * 1.7;
     } else if (countNumberOfDigits <= 27) {
-      debug.log('$countNumberOfDigits width * 1.9');
       return width * 1.9;
     } else {
-      debug.log('$countNumberOfDigits width * 2');
       return width * 2;
     }
   }
